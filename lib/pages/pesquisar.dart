@@ -59,10 +59,10 @@ class _PesquisarState extends State<Pesquisar> {
                 case ConnectionState.waiting:
                 case ConnectionState.none:
                   return Container(
-                    width: double.infinity,
-                    height: 200,
+                    width: 600,
+                    height: 100,
                     alignment: Alignment.center,
-                    child: CircularProgressIndicator(
+                    child: const CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
                       strokeWidth: 5,
                     ),
@@ -86,18 +86,39 @@ class _PesquisarState extends State<Pesquisar> {
   Widget _criarGridLivros(BuildContext context, AsyncSnapshot snapshot) {
     return GridView.builder(
       padding: EdgeInsets.all(10),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 1, crossAxisSpacing: 2, mainAxisSpacing: 2),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 1,
+        crossAxisSpacing: 1,
+        mainAxisSpacing: 1,
+        childAspectRatio: 3.0,
+      ),
       itemCount: 10,
       itemBuilder: (context, index) {
-        if (snapshot.data == null) {
+        if (snapshot.data["items"] == null) {
           return Container();
         }
 
-        return Row(
-          children: [
-            Text(snapshot.data["items"][index]["volumeInfo"]["title"])
-          ],
+        return Container(
+          color: Colors.grey,
+          child: Row(
+            children: [
+              if (snapshot.data['items'][index]['volumeInfo']['imageLinks'] !=
+                      null &&
+                  snapshot.data['items'][index]['volumeInfo']['imageLinks']
+                          ['thumbnail'] !=
+                      null)
+                Image(
+                  image: NetworkImage(snapshot.data['items'][index]
+                      ['volumeInfo']['imageLinks']['thumbnail']),
+                )
+              else
+                Icon(Icons.image),
+              const SizedBox(
+                width: 10,
+              ),
+              Text(snapshot.data["items"][index]["volumeInfo"]["title"],style: const TextStyle(fontSize: 25),),
+            ],
+          ),
         );
       },
     );

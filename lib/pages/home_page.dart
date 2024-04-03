@@ -1,3 +1,4 @@
+import 'package:books_app/pages/pesquisar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -32,7 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
               onTap: (){
-                 Navigator.pushNamed(context, '/second');
+                 Navigator.push(context,MaterialPageRoute(builder: (context) => const Pesquisar()));
               },
             )
           ],

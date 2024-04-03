@@ -7,14 +7,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return  const MaterialApp(
       title: 'Books App',
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      routes:{
-        '/': (context) => const MyHomePage(),
-        '/second': (context) => const Pesquisar(),
-      }
+      home: MyHomePage(),
     );
   }
 }
