@@ -1,4 +1,3 @@
-import 'package:books_app/model/livro.dart';
 import 'package:books_app/repository/livro_repository.dart';
 import 'package:flutter/material.dart';
 
@@ -111,31 +110,42 @@ class _PesquisarState extends State<Pesquisar> {
                       Image(
                         image: NetworkImage(snapshot.data['items'][index]
                             ['volumeInfo']['imageLinks']['thumbnail']),
+                        width: 100,
+                        fit: BoxFit.fitWidth,
                       )
                     else
                       const Image(
-                          image: AssetImage(
-                              "assets/images/placeholder_image.jpg")),
+                        image:
+                            AssetImage("assets/images/placeholder_image.jpg"),
+                        width: 100,
+                        fit: BoxFit.fitWidth,
+                      ),
                     const SizedBox(
                       width: 10,
                     ),
-                    SizedBox(
-                      width: 230,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            snapshot.data["items"][index]["volumeInfo"]
-                                ["title"],
-                            style: const TextStyle(fontSize: 20),
-                          ),
-                          Text(
-                            snapshot.data["items"][index]["volumeInfo"]
-                                ["description"] + "...",
-                            style: const TextStyle(fontSize: 15),
-                            maxLines: 3,
-                          )
-                        ],
+                    FittedBox(
+                      child: SizedBox(
+                        width: 230,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              snapshot.data["items"][index]["volumeInfo"]
+                                      ["title"] ??
+                                  "",
+                              style: const TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                              maxLines: 3,
+                            ),
+                            Text(
+                              snapshot.data["items"][index]["volumeInfo"]
+                                      ["description"] ??
+                                  "",
+                              style: const TextStyle(fontSize: 15),
+                              maxLines: 3,
+                            )
+                          ],
+                        ),
                       ),
                     ),
                     const Spacer(),
