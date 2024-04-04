@@ -14,22 +14,21 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         title: const Text("Meus Livros",style: TextStyle
-        (color: Colors.white,fontWeight: FontWeight.bold),),
+        (fontWeight: FontWeight.bold),),
         centerTitle: true,
-         iconTheme: const IconThemeData(color: Colors.white),
       ),
       drawer:  Drawer(
         child: ListView(
           children:  [
-            const DrawerHeader(child: Icon(Icons.book,size: 60,)),
+            const DrawerHeader(child: Icon(Icons.book,size: 70,)),
             ListTile(
               title: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Pesquisar"),
-                  Icon(Icons.search_rounded)
+                  Text("Pesquisar",style: TextStyle(fontSize: 25),),
+                  Icon(Icons.search_rounded,size: 25)
                 ],
               ),
               onTap: (){
@@ -39,7 +38,9 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      body: const Placeholder(),
+      body: const Column(
+        children: [],
+      )
     );
   }
 }

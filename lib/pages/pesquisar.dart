@@ -1,5 +1,3 @@
-import 'dart:js_interop';
-
 import 'package:books_app/model/livro.dart';
 import 'package:books_app/repository/livro_repository.dart';
 import 'package:flutter/material.dart';
@@ -24,23 +22,21 @@ class _PesquisarState extends State<Pesquisar> {
   @override
   Widget build(BuildContext context) {
     TextEditingController controlerBusca = TextEditingController();
-
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         title: const Text(
           "Pesquisar",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Column(
         children: [
           Padding(
-            padding: EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(10.0),
             child: TextField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Pesquisar",
                 border: OutlineInputBorder(),
               ),
@@ -85,12 +81,12 @@ class _PesquisarState extends State<Pesquisar> {
 
   Widget _criarGridLivros(BuildContext context, AsyncSnapshot snapshot) {
     return GridView.builder(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 1,
         crossAxisSpacing: 1,
-        mainAxisSpacing: 1,
-        childAspectRatio: 3.0,
+        mainAxisSpacing: 5,
+        childAspectRatio: 2.5,
       ),
       itemCount: 10,
       itemBuilder: (context, index) {
@@ -99,24 +95,61 @@ class _PesquisarState extends State<Pesquisar> {
         }
 
         return Container(
-          color: Colors.grey,
-          child: Row(
+          color: Theme.of(context).colorScheme.tertiary,
+          child: Stack(
             children: [
-              if (snapshot.data['items'][index]['volumeInfo']['imageLinks'] !=
-                      null &&
-                  snapshot.data['items'][index]['volumeInfo']['imageLinks']
-                          ['thumbnail'] !=
-                      null)
-                Image(
-                  image: NetworkImage(snapshot.data['items'][index]
-                      ['volumeInfo']['imageLinks']['thumbnail']),
-                )
-              else
-                Icon(Icons.image),
-              const SizedBox(
-                width: 10,
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  children: [
+                    if (snapshot.data['items'][index]['volumeInfo']
+                                ['imageLinks'] !=
+                            null &&
+                        snapshot.data['items'][index]['volumeInfo']
+                                ['imageLinks']['thumbnail'] !=
+                            null)
+                      Image(
+                        image: NetworkImage(snapshot.data['items'][index]
+                            ['volumeInfo']['imageLinks']['thumbnail']),
+                      )
+                    else
+                      const Image(
+                          image: AssetImage(
+                              "assets/images/placeholder_image.jpg")),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    SizedBox(
+                      width: 230,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            snapshot.data["items"][index]["volumeInfo"]
+                                ["title"],
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                          Text(
+                            snapshot.data["items"][index]["volumeInfo"]
+                                ["description"] + "...",
+                            style: const TextStyle(fontSize: 15),
+                            maxLines: 3,
+                          )
+                        ],
+                      ),
+                    ),
+                    const Spacer(),
+                  ],
+                ),
               ),
-              Text(snapshot.data["items"][index]["volumeInfo"]["title"],style: const TextStyle(fontSize: 25),),
+              Positioned(
+                top: 10,
+                right: 10,
+                child: GestureDetector(
+                  onTap: () {},
+                  child: const Icon(Icons.favorite),
+                ),
+              ),
             ],
           ),
         );
