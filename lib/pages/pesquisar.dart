@@ -2,6 +2,7 @@ import 'package:books_app/model/livro.dart';
 import 'package:books_app/repository/livro_repository.dart';
 import 'package:books_app/repository/sqlite_crud.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 
 class Pesquisar extends StatefulWidget {
   const Pesquisar({super.key});
@@ -170,7 +171,26 @@ class _PesquisarState extends State<Pesquisar> {
 
                     await sqliteCrud().salvarLista(novoLivro);
 
-                    print("Livro salvo: $novoLivro");
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            content: const Text(
+                              "Livro favoritado com sucesso",
+                              style: TextStyle(
+                                  fontSize: 25, fontWeight: FontWeight.bold),
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('OK',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                                
+                              ),
+                            ],
+                          );
+                        });
                   },
                   child: const Icon(Icons.favorite),
                 ),
@@ -181,5 +201,4 @@ class _PesquisarState extends State<Pesquisar> {
       },
     );
   }
-  
 }

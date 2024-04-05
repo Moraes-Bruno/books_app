@@ -112,12 +112,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         livro.getTitulo() ?? '',
                         style: const TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
-                        maxLines: 3,
+                        maxLines: 2,
                       ),
                       subtitle: Text(
                         livro.getDescricao() ?? '',
                         style: const TextStyle(fontSize: 15),
-                        maxLines: 3,
+                        maxLines: 2,
                       ),
                       // Aqui você pode adicionar mais widgets para exibir informações adicionais do livro
                     ),
