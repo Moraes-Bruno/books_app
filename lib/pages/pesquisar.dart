@@ -1,4 +1,6 @@
+import 'package:books_app/model/livro.dart';
 import 'package:books_app/repository/livro_repository.dart';
+import 'package:books_app/repository/sqlite_crud.dart';
 import 'package:flutter/material.dart';
 
 class Pesquisar extends StatefulWidget {
@@ -156,7 +158,20 @@ class _PesquisarState extends State<Pesquisar> {
                 top: 10,
                 right: 10,
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () async {
+                    var livro = snapshot.data['items'][index];
+
+                    Livro novoLivro = Livro(
+                      null,
+                      livro['volumeInfo']['title'] ?? "",
+                      livro['volumeInfo']['description'] ?? "",
+                      livro['volumeInfo']['imageLinks']['thumbnail'] ?? "",
+                    );
+
+                    await sqliteCrud().salvarLista(novoLivro);
+
+                    print("Livro salvo: $novoLivro");
+                  },
                   child: const Icon(Icons.favorite),
                 ),
               ),

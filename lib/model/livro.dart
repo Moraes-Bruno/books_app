@@ -1,9 +1,19 @@
 class Livro {
   String? _id;
   String? _titulo;
+  String? _descricao;
   String? _imagem;
 
-  Livro(this._id, this._titulo, this._imagem);
+  Livro(this._id, this._titulo,this._descricao,this._imagem);
+
+Map<String, dynamic> toJson() {
+    return {
+      "id": getId(),
+      "titulo": getTitulo(),
+      "descricao": getDescricao(),
+      "imagem": getImagem()
+    };
+  }
 
   String? getId() {
     return _id;
@@ -19,6 +29,14 @@ class Livro {
 
   void setTitulo(String titulo) {
     _titulo = titulo;
+  }
+
+  String? getDescricao(){
+    return _descricao;
+  }
+  
+  void setDescricao(String descricao){
+    _descricao = descricao;
   }
 
   String? getImagem() {
