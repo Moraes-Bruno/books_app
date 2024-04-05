@@ -58,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
         future: _futureLivros,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           } else if (snapshot.hasError) {
@@ -71,11 +71,56 @@ class _MyHomePageState extends State<MyHomePage> {
               itemCount: livros.length,
               itemBuilder: (context, index) {
                 final livro = livros[index];
-                return Container(
-                  child: ListTile(
-                    title: Text(livro.getTitulo() ?? ''),
-                    subtitle: Text(livro.getDescricao() ?? ''),
-                    // Aqui você pode adicionar mais widgets para exibir informações adicionais do livro
+                return Dismissible(
+                  key: Key(DateTime.now().microsecondsSinceEpoch.toString()),
+                  background: Container(
+                    color: Colors.red,
+                    child: const Align(
+                      alignment: Alignment(-0.9, 0.0),
+                      child: Icon(
+                        Icons.delete,
+                        size: 30,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  direction: DismissDirection.startToEnd,
+                  onDismissed: (direction) {
+
+                    sqliteCrud().excluirLivro(livro.getTitulo().toString());
+
+                    setState(() {
+                      livros.removeAt(index);
+                    });
+                  },
+                  child: Container(
+                    height: 100,
+                    width: 400,
+                    margin: const EdgeInsets.only(top: 15),
+                    child: ListTile(
+                      leading: livro.getImagem() != null
+                          ? Image.network(
+                              livro.getImagem()!,
+                              height: 100,
+                              width: 80,
+                              fit: BoxFit.cover,
+                            )
+                          : const Image(
+                              image: AssetImage(
+                                  "assets/images/placeholder_image.jpg")),
+                      title: Text(
+                        livro.getTitulo() ?? '',
+                        style: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                        maxLines: 3,
+                      ),
+                      subtitle: Text(
+                        livro.getDescricao() ?? '',
+                        style: const TextStyle(fontSize: 15),
+                        maxLines: 3,
+                      ),
+                      // Aqui você pode adicionar mais widgets para exibir informações adicionais do livro
+                    ),
                   ),
                 );
               },

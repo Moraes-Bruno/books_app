@@ -1,6 +1,7 @@
 import 'package:books_app/model/livro.dart';
 import 'package:books_app/repository/sqlite.dart';
 
+
 class sqliteCrud{
   sqliteCrud();
 
@@ -27,5 +28,12 @@ class sqliteCrud{
     ));
   }
   return livros;
-}}
+}
+
+Future<void> excluirLivro(String nome) async {
+  var db = await SQliteDataBase().obterDataBase();
+  await db.delete('livros', where: 'titulo = ?', whereArgs: [nome]);
+}
+
+}
 
