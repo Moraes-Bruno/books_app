@@ -185,8 +185,12 @@ class _PesquisarState extends State<Pesquisar> {
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
-                                child: const Text('OK',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                                
+                                child: const Text(
+                                  'OK',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                             ],
                           );

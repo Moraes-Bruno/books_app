@@ -12,11 +12,22 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late Future<List<Livro>> _futureLivros;
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
-    _futureLivros = _buscarLivrosSalvos();
+    _carregarLivros();
+  }
+
+  Future<void> _carregarLivros() async {
+    setState(() {
+      _futureLivros = _buscarLivrosSalvos();
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _refreshIndicatorKey.currentState?.show();
+    });
   }
 
   Future<List<Livro>> _buscarLivrosSalvos() async {
@@ -67,64 +78,67 @@ class _MyHomePageState extends State<MyHomePage> {
             );
           } else {
             final livros = snapshot.data!;
-            return ListView.builder(
-              itemCount: livros.length,
-              itemBuilder: (context, index) {
-                final livro = livros[index];
-                return Dismissible(
-                  key: Key(DateTime.now().microsecondsSinceEpoch.toString()),
-                  background: Container(
-                    color: Colors.red,
-                    child: const Align(
-                      alignment: Alignment(-0.9, 0.0),
-                      child: Icon(
-                        Icons.delete,
-                        size: 30,
-                        color: Colors.white,
+            return RefreshIndicator(
+                key: _refreshIndicatorKey,
+                onRefresh: _carregarLivros,
+                child: ListView.builder(
+                  itemCount: livros.length,
+                  itemBuilder: (context, index) {
+                    final livro = livros[index];
+                    return Dismissible(
+                      key:
+                          Key(DateTime.now().microsecondsSinceEpoch.toString()),
+                      background: Container(
+                        color: Colors.red,
+                        child: const Align(
+                          alignment: Alignment(-0.9, 0.0),
+                          child: Icon(
+                            Icons.delete,
+                            size: 30,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  direction: DismissDirection.startToEnd,
-                  onDismissed: (direction) {
+                      direction: DismissDirection.startToEnd,
+                      onDismissed: (direction) {
+                        sqliteCrud().excluirLivro(livro.getTitulo().toString());
 
-                    sqliteCrud().excluirLivro(livro.getTitulo().toString());
-
-                    setState(() {
-                      livros.removeAt(index);
-                    });
+                        setState(() {
+                          livros.removeAt(index);
+                        });
+                      },
+                      child: Container(
+                        height: 100,
+                        width: 400,
+                        margin: const EdgeInsets.only(top: 15),
+                        child: ListTile(
+                          leading: livro.getImagem() != null
+                              ? Image.network(
+                                  livro.getImagem()!,
+                                  height: 100,
+                                  width: 80,
+                                  fit: BoxFit.cover,
+                                )
+                              : const Image(
+                                  image: AssetImage(
+                                      "assets/images/placeholder_image.jpg")),
+                          title: Text(
+                            livro.getTitulo() ?? '',
+                            style: const TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                            maxLines: 2,
+                          ),
+                          subtitle: Text(
+                            livro.getDescricao() ?? '',
+                            style: const TextStyle(fontSize: 15),
+                            maxLines: 2,
+                          ),
+                          // Aqui você pode adicionar mais widgets para exibir informações adicionais do livro
+                        ),
+                      ),
+                    );
                   },
-                  child: Container(
-                    height: 100,
-                    width: 400,
-                    margin: const EdgeInsets.only(top: 15),
-                    child: ListTile(
-                      leading: livro.getImagem() != null
-                          ? Image.network(
-                              livro.getImagem()!,
-                              height: 100,
-                              width: 80,
-                              fit: BoxFit.cover,
-                            )
-                          : const Image(
-                              image: AssetImage(
-                                  "assets/images/placeholder_image.jpg")),
-                      title: Text(
-                        livro.getTitulo() ?? '',
-                        style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                        maxLines: 2,
-                      ),
-                      subtitle: Text(
-                        livro.getDescricao() ?? '',
-                        style: const TextStyle(fontSize: 15),
-                        maxLines: 2,
-                      ),
-                      // Aqui você pode adicionar mais widgets para exibir informações adicionais do livro
-                    ),
-                  ),
-                );
-              },
-            );
+                ));
           }
         },
       ),
