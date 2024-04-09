@@ -107,33 +107,31 @@ class _MyHomePageState extends State<MyHomePage> {
                           livros.removeAt(index);
                         });
                       },
-                      child: Container(
-                        height: 100,
-                        width: 400,
-                        margin: const EdgeInsets.only(top: 15),
-                        child: ListTile(
-                          leading: livro.getImagem() != null
-                              ? Image.network(
-                                  livro.getImagem()!,
-                                  height: 100,
-                                  width: 80,
-                                  fit: BoxFit.cover,
-                                )
-                              : const Image(
-                                  image: AssetImage(
-                                      "assets/images/placeholder_image.jpg")),
-                          title: Text(
-                            livro.getTitulo() ?? '',
-                            style: const TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                            maxLines: 2,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10,right: 10),
+                        child: Container(
+                          color: Theme.of(context).colorScheme.tertiary,
+                          height: 120,
+                          width: 400,
+                          margin: const EdgeInsets.only(top: 10),
+                          child: ListTile(
+                            leading: Image.network(
+                                    livro.getImagem()!,
+                                    height: 100,
+                                  ),
+                            title:  Text(
+                              livro.getTitulo() ?? '',
+                              style: const TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                              maxLines: 2,
+                            ),
+                            subtitle: Text(
+                              livro.getDescricao() ?? '',
+                              style: const TextStyle(fontSize: 15),
+                              maxLines: 2,
+                            ),
+                            // Aqui você pode adicionar mais widgets para exibir informações adicionais do livro
                           ),
-                          subtitle: Text(
-                            livro.getDescricao() ?? '',
-                            style: const TextStyle(fontSize: 15),
-                            maxLines: 2,
-                          ),
-                          // Aqui você pode adicionar mais widgets para exibir informações adicionais do livro
                         ),
                       ),
                     );

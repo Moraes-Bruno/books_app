@@ -1,16 +1,24 @@
-# books_app
+Books app
+=========
 
-A new Flutter project.
+Membros
+-------
 
-## Getting Started
+*   Bruno de Moraes
+*   João Nascimento
+*   Vinicius Henrique
 
-This project is a starting point for a Flutter application.
+O que foi utilizado
+-------------------
 
-A few resources to get you started if this is your first Flutter project:
+Api: google-books
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+BD: sqlite
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Dependencias do flutter
+
+*   http
+*   provider
+*   flutter\_dotenv
+*   sqflite
+*   path
