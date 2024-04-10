@@ -61,6 +61,20 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const Pesquisar()));
               },
+            ),
+            const SizedBox(height: 10,),
+            ListTile(
+              title: const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Meus Livros", style: TextStyle(fontSize: 25)),
+                  Icon(Icons.book, size: 25)
+                ],
+              ),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const MyHomePage()));
+              },
             )
           ],
         ),

@@ -1,4 +1,5 @@
 import 'package:books_app/model/livro.dart';
+import 'package:books_app/pages/home_page.dart';
 import 'package:books_app/repository/livro_repository.dart';
 import 'package:books_app/repository/sqlite_crud.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,44 @@ class _PesquisarState extends State<Pesquisar> {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            const DrawerHeader(child: Icon(Icons.book, size: 70)),
+            ListTile(
+              title: const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Pesquisar", style: TextStyle(fontSize: 25)),
+                  Icon(Icons.search_rounded, size: 25)
+                ],
+              ),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const Pesquisar()));
+              },
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            ListTile(
+              title: const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Meus Livros", style: TextStyle(fontSize: 25)),
+                  Icon(Icons.book, size: 25)
+                ],
+              ),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MyHomePage()));
+              },
+            )
+          ],
+        ),
       ),
       body: Column(
         children: [
