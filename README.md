@@ -1,8 +1,9 @@
 Books app
 =========
 
-OBS:Antes de executar a aplicação criar arquivo keys.env no diretório Assets,
-dentro dele colocar chave da API do Google books
+OBS: Antes de executar a aplicação criar arquivo keys.env no diretório Assets,
+dentro do arquivo keys adicionar a chave da api do google books
+EX:API_KEY=(chave da api)
 
 
 Membros
@@ -21,8 +22,8 @@ BD: sqlite
 
 ### Dependencias do flutter
 
-*   http
-*   provider
-*   flutter\_dotenv
-*   sqflite
-*   path
+*   http: https://pub.dev/packages/http
+*   provider: https://pub.dev/packages/provider
+*   flutter\_dotenv: https://pub.dev/packages/flutter_dotenv
+*   sqflite: https://pub.dev/packages/sqflite
+*   path: https://pub.dev/packages/path
