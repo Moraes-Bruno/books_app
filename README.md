@@ -1,6 +1,10 @@
 Books app
 =========
 
+OBS:Antes de executar a aplicação criar arquivo keys.env no diretório Assets,
+dentro dele colocar chave da API do Google books
+
+
 Membros
 -------
 
